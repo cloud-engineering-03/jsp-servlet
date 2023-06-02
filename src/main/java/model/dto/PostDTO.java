@@ -3,8 +3,10 @@ package model.dto;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -12,6 +14,8 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostDTO {
 	private int postId;
 	private String title;

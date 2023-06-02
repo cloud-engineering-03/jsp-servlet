@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.AddException;
+import exception.DeleteException;
+import exception.ModifyException;
 import exception.NotExistException;
 import model.dto.CommentDTO;
 import model.util.DBUtil;
 
 public class CommentDAO {
-	public static boolean create(CommentDTO comment) throws SQLException {
+	public static boolean create(CommentDTO comment) throws SQLException, AddException{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -81,7 +84,7 @@ public class CommentDAO {
 		return list;
 	}
 
-	public static boolean update(CommentDTO comment) throws SQLException, NotExistException {
+	public static boolean update(CommentDTO comment) throws SQLException, ModifyException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -99,7 +102,7 @@ public class CommentDAO {
 		return false;
 	}
 
-	public static boolean delete(int commentId) throws SQLException, NotExistException {
+	public static boolean delete(int commentId) throws SQLException, DeleteException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {

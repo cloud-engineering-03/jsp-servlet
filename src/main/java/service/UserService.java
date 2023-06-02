@@ -2,6 +2,9 @@ package service;
 
 import java.sql.SQLException;
 
+import exception.AddException;
+import exception.DeleteException;
+import exception.ModifyException;
 import exception.NotExistException;
 import model.CommentDAO;
 import model.PeopleDAO;
@@ -19,7 +22,7 @@ public class UserService {
 		return UserDAO.idDupCheck(id);
 	}
 	
-	public boolean signUp(UserDTO user) throws SQLException, NotExistException {
+	public boolean signUp(UserDTO user) throws SQLException, AddException {
 		PeopleDAO.update(user.getName(), 1);
 		return UserDAO.signUp(user);
 	}
@@ -28,11 +31,11 @@ public class UserService {
 		return UserDAO.login(id, pwd);
 	}
 	
-	public boolean update(UserDTO user) throws SQLException, NotExistException {
+	public boolean update(UserDTO user) throws SQLException, ModifyException {
 		return UserDAO.update(user);
 	}
 	
-	public boolean delete(String name) throws SQLException, NotExistException {
+	public boolean delete(String name) throws SQLException, DeleteException, NotExistException {
 		CommentDAO.deleteByName(name);
 		PostDAO.deleteByName(name);
 		PeopleDAO.update(name, 0);

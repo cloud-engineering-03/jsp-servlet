@@ -1,6 +1,9 @@
-package controller.user;
+package controller.post;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,122 +14,104 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import exception.DeleteException;
-import exception.ModifyException;
 import exception.NotExistException;
-import model.dto.UserDTO;
-import service.UserService;
+import model.dto.PostDTO;
+import service.PostService;
 
-@WebServlet("/user")
-public class UserServlet extends HttpServlet {
-	UserService service = new UserService();
-
-	//정보 조회 -- post, review 포함
+@WebServlet("/post")
+public class PostServlet extends HttpServlet {
+	
+	private PostService service = new PostService();
+	
+	//postID에 맞는 post 정보 호출
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,Object> map = new HashMap();
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		UserDTO user = null;
-		
 		try {
-//			service.getUserInfo((String)request.getSession().getAttribute("name"));
-			user = service.getUserInfo("김혁준");
-			System.out.println("-------------------------"+user);
-			map.put("status", 1);
-			map.put("user", user);
+			int no = Integer.parseInt(request.getParameter("no"));
+			map.put("post",service.read(no));
+			map.put("status",1);
 		} catch (SQLException | NotExistException e) {
+			map.put("status",0);
 			e.printStackTrace();
 		}
 		response.getWriter().print(mapper.writeValueAsString(map));
 	}
-
-	//login
+	
+	//post 등록
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,Object> map = new HashMap();
 		ObjectMapper mapper = new ObjectMapper();
-		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br = null;
+		InputStream is = request.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		
+		String line="";
+		while( (line = br.readLine()) !=null) {
+			sb.append(line);			
+		}
+		
+		String s = sb.toString();
+		PostDTO post = mapper.readValue(s, PostDTO.class);
 		try {
-			JSONObject obj = new JSONObject(request.getReader().readLine());
-			UserDTO user = service.login((String)obj.get("id"), (String)obj.get("pw"));
-			map.put("status",1);
-			request.getSession().setAttribute("nick", user.getNickName());
-		} catch (SQLException | NotExistException e) {
+			service.create(post);
+			map.put("status", 1);
+		} catch (SQLException e) {
+			map.put("status", 0);
 			e.printStackTrace();
-			map.put("status",0);
 		}
 		response.getWriter().print(mapper.writeValueAsString(map));
 	}
-
-	//정보 수정 -- post, review 제외 user 정보만 수정 (post,review는 각 servlet에서 수정 실행)
+	
+	//post 수정
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,Object> map = new HashMap();
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
 		
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br = null;
+		InputStream is = request.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		
+		String line="";
+		while( (line = br.readLine()) !=null) {
+			sb.append(line);			
+		}
+		
+		String s = sb.toString();
+		PostDTO post = mapper.readValue(s, PostDTO.class);
 		try {
-			String s = request.getReader().readLine();
-			UserDTO user = mapper.readValue(s, UserDTO.class);
-			if(service.update(user)) {
-				map.put("status",1);
-			}
-		} catch (SQLException | ModifyException e) {
+			service.update(post);
+			map.put("status", 1);
+		} catch (SQLException e) {
+			map.put("status", 0);
 			e.printStackTrace();
-			map.put("status",0);
 		}
 		response.getWriter().print(mapper.writeValueAsString(map));
 	}
-
-	//회원 탈퇴 -- 작성한 post, review 포함 전부 삭제, people 데이터 바꾸기
+	
+	//post 삭제
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,Object> map = new HashMap();
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");
-		
 		try {
-//			String s = request.getReader().readLine();
-			UserDTO user = mapper.readValue((String)request.getSession().getAttribute("name")
-											, UserDTO.class);
-			service.delete(user.getName());
-			//service.delete(request.getSession().getAttribute("name");
-			map.put("status", 1);
-		} catch (SQLException | DeleteException | NotExistException e) {
+			int no = Integer.parseInt(request.getParameter("no"));
+			service.delete(no);
+			map.put("status",1);
+		} catch (SQLException | NotExistException e) {
+			map.put("status",0);
 			e.printStackTrace();
-			map.put("status", 0);
 		}
-		
 		response.getWriter().print(mapper.writeValueAsString(map));
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

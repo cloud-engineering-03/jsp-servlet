@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import exception.AddException;
+import exception.DeleteException;
+import exception.ModifyException;
 import exception.NotExistException;
 import model.dto.UserDTO;
 import model.util.DBUtil;
@@ -12,7 +15,7 @@ import model.util.DBUtil;
 public class UserDAO {
 
 	// 회원가입 하는 메소드
-	public static boolean signUp(UserDTO user) throws SQLException, NotExistException {
+	public static boolean signUp(UserDTO user) throws SQLException, AddException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -105,7 +108,7 @@ public class UserDAO {
 		}
 	}
 
-	public static boolean update(UserDTO user) throws SQLException, NotExistException {
+	public static boolean update(UserDTO user) throws SQLException, ModifyException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -117,14 +120,14 @@ public class UserDAO {
 			if (pstmt.executeUpdate() == 1) {
 				return true;
 			} else {
-				throw new NotExistException("해당 사람 없음");
+				throw new ModifyException("수정 실패");
 			}
 		} finally {
 			DBUtil.close(con, pstmt);
 		}
 	}
 
-	public static boolean delete(String name) throws SQLException, NotExistException {
+	public static boolean delete(String name) throws SQLException, DeleteException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -149,14 +152,13 @@ public class UserDAO {
 
 		try {
 			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement("select * from user where name = ?");
+			pstmt = con.prepareStatement("select id,name,nickname from user where name = ?");
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				user = UserDTO.builder().name(rs.getString(1))
 										.id(rs.getString(2))
-										.password(rs.getString(3))
-										.nickName(rs.getString(4))
+										.nickName(rs.getString(3))
 										.build();
 //				user.setPostList(PostDAO.readByName(user.getName()));
 //				user.setCommentList(CommentDAO.readByName(user.getName()));

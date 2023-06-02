@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import exception.AddException;
 import exception.NotExistException;
 import model.dto.UserDTO;
 import service.UserService;
@@ -68,7 +69,7 @@ public class SignUpServlet extends HttpServlet {
 			//-----------------
 			
 			map.put("status", 1);
-		} catch (SQLException | NotExistException e) {
+		} catch (SQLException | AddException e) {
 			e.printStackTrace();
 			map.put("status", 0);
 		}
