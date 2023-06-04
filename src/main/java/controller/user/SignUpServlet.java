@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import exception.AddException;
-import exception.NotExistException;
 import model.dto.UserDTO;
+import model.util.Boan;
 import service.UserService;
 
 @WebServlet("/user/new")
@@ -63,9 +63,13 @@ public class SignUpServlet extends HttpServlet {
 		UserDTO user = mapper.readValue(s, UserDTO.class);
 		//JSON 문자열 받아와서 Object로 변환 끝		
 		
+		//암호화 시작
+		String salt = Boan.salt();
+		user.setPassword(Boan.change(user.getPassword()+salt));
+		
 		try {
 			//-------------이부분 트랜잭션 처리 고민해봐야함
-			service.signUp(user);
+			service.signUp(user,salt);
 			//-----------------
 			
 			map.put("status", 1);

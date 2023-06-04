@@ -15,16 +15,17 @@ import model.util.DBUtil;
 public class UserDAO {
 
 	// 회원가입 하는 메소드
-	public static boolean signUp(UserDTO user) throws SQLException, AddException {
+	public static boolean signUp(UserDTO user, String salt) throws SQLException, AddException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement("insert into user values(?,?,?,?)");
+			pstmt = con.prepareStatement("insert into user values(?,?,?,?,?)");
 			pstmt.setString(1, user.getName());
 			pstmt.setString(2, user.getId());
 			pstmt.setString(3, user.getPassword());
 			pstmt.setString(4, user.getNickName());
+			pstmt.setString(5, salt);
 			if (pstmt.executeUpdate() == 1) {
 				PeopleDAO.update(user.getName(), 1);
 				return true;
@@ -79,7 +80,28 @@ public class UserDAO {
 			DBUtil.close(con, pstmt, rs);
 		}
 	}
-
+	
+	public static String salt(String id) throws SQLException, NotExistException{
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("select salt from user where id=?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String salt = rs.getString(1);
+				return salt;
+			} else {
+				throw new NotExistException("로그인 실패!.");
+			}
+		} finally {
+			DBUtil.close(con, pstmt, rs);
+		}
+	}
+	
+	
 	// 사용자의 id, pwd 일치하는지 확인하는 메소드
 	public static UserDTO login(String id, String pwd) throws SQLException, NotExistException {
 		Connection con = null;

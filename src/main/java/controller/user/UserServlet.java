@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import exception.DeleteException;
 import exception.ModifyException;
 import exception.NotExistException;
 import model.dto.UserDTO;
+import model.util.JToken;
 import service.UserService;
 
 @WebServlet("/user")
@@ -55,7 +57,8 @@ public class UserServlet extends HttpServlet {
 			JSONObject obj = new JSONObject(request.getReader().readLine());
 			UserDTO user = service.login((String)obj.get("id"), (String)obj.get("pw"));
 			map.put("status",1);
-			request.getSession().setAttribute("nick", user.getNickName());
+			Cookie cookie = new Cookie("user",JToken.createA(user.getName()));
+			response.addCookie(cookie);
 		} catch (SQLException | NotExistException e) {
 			e.printStackTrace();
 			map.put("status",0);
@@ -75,7 +78,7 @@ public class UserServlet extends HttpServlet {
 			if(service.update(user)) {
 				map.put("status",1);
 			}
-		} catch (SQLException | ModifyException e) {
+		} catch (SQLException | ModifyException | NotExistException e) {
 			e.printStackTrace();
 			map.put("status",0);
 		}

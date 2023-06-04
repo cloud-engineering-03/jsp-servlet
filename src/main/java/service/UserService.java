@@ -11,6 +11,7 @@ import model.PeopleDAO;
 import model.PostDAO;
 import model.UserDAO;
 import model.dto.UserDTO;
+import model.util.Boan;
 
 public class UserService {
 	
@@ -22,16 +23,18 @@ public class UserService {
 		return UserDAO.idDupCheck(id);
 	}
 	
-	public boolean signUp(UserDTO user) throws SQLException, AddException {
+	public boolean signUp(UserDTO user, String salt) throws SQLException, AddException {
 		PeopleDAO.update(user.getName(), 1);
-		return UserDAO.signUp(user);
+		return UserDAO.signUp(user,salt);
 	}
 	
 	public UserDTO login(String id, String pwd) throws SQLException, NotExistException {
+		pwd = Boan.change(pwd+UserDAO.salt(id));
 		return UserDAO.login(id, pwd);
 	}
 	
-	public boolean update(UserDTO user) throws SQLException, ModifyException {
+	public boolean update(UserDTO user) throws SQLException, ModifyException, NotExistException {
+		user.setPassword(Boan.change(user.getPassword()+UserDAO.salt(user.getId())));
 		return UserDAO.update(user);
 	}
 	
