@@ -55,7 +55,7 @@ public class UserServlet extends HttpServlet {
 		
 		try {
 			JSONObject obj = new JSONObject(request.getReader().readLine());
-			UserDTO user = service.login((String)obj.get("id"), (String)obj.get("pw"));
+			UserDTO user = service.login((String)obj.get("id"), (String)obj.get("password"));
 			map.put("status",1);
 			Cookie cookie = new Cookie("user",JToken.createA(user.getName()));
 			response.addCookie(cookie);
