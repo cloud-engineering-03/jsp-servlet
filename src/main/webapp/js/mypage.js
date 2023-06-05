@@ -2,7 +2,8 @@ let cookies = document.cookie;
 let cookie = cookies.split(";");
 let userToken = cookie[0].split("=")[1];
 let userName;
-
+let postList;
+let commentList;
 window.onload= function(){
 
     if(userToken != ""){
@@ -35,6 +36,11 @@ window.onload= function(){
                     document.getElementById('name').value = data.user.name;
                     document.getElementById('nickName').value = data.user.nickName;
                     document.getElementById('id').value = data.user.id;
+                    postList = data.user.postList;
+                    commentList = data.user.commentList;
+                    if(postList.length !=0 || commentList.length != 0){
+                        document.getElementById('list').setAttribute('style',"display:show");
+                    }
                 }else{
                     alert('비밀번호 제대로 입력하세요');
                 }
@@ -68,7 +74,18 @@ window.onload= function(){
     })
     
 
+    document.getElementById("list").addEventListener("click",function(){
+        document.getElementById('p').remove();
+        let postTable = document.getElementById('postTable');
+        postTable.setAttribute("style","display:show");
+        postTable.setAttribute("style","background-color:white");
+        
+        let i;
+        postList.forEach(e => {
+            console.log(e);
+        });
 
+    })
 
 
 

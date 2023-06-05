@@ -52,9 +52,25 @@
         <input id='id' class="btn btn-lg btn-secondary fw-bold border-white bg-white" readonly><br><br>
         <input id='password' type="password" class="btn btn-lg btn-secondary fw-bold border-white bg-white" placeholder='Password'><br><br>
         <input id='nickName' class="btn btn-lg btn-secondary fw-bold border-white bg-white" ><br><br>
-        <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white">글 목록</button>
+        <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white" style="display:none">글 목록</button>
         <button id="modify" class="btn btn-lg btn-secondary fw-bold border-white bg-white">수정하기</button>
     </p>
+    <table id="postTable" class="table" style="background-color:white; display:none">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" width="70%">제목</th>
+      <th scope="col">날짜</th>
+    </tr>
+  </thead>
+  <tbody id="body">
+    <tr id="tr">
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>
+</table>
   </main>
 
   <footer class="mt-auto text-white-50">
