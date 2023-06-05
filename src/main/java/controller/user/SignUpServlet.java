@@ -69,6 +69,9 @@ public class SignUpServlet extends HttpServlet {
 		
 		try {
 			//-------------이부분 트랜잭션 처리 고민해봐야함
+			if(user.getId() == null|| user.getPassword()==null || user.getNickName()==null) {
+				throw new AddException();
+			}
 			service.signUp(user,salt);
 			//-----------------
 			

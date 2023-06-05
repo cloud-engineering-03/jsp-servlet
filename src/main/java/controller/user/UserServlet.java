@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import exception.AddException;
 import exception.DeleteException;
 import exception.ModifyException;
 import exception.NotExistException;
@@ -37,8 +38,7 @@ public class UserServlet extends HttpServlet {
 		
 		try {
 //			service.getUserInfo((String)request.getSession().getAttribute("name"));
-			user = service.getUserInfo("김혁준");
-			System.out.println("-------------------------"+user);
+			user = service.getUserInfo(request.getParameter("name"));
 			map.put("status", 1);
 			map.put("user", user);
 		} catch (SQLException | NotExistException e) {
@@ -75,10 +75,13 @@ public class UserServlet extends HttpServlet {
 		try {
 			String s = request.getReader().readLine();
 			UserDTO user = mapper.readValue(s, UserDTO.class);
+			if(user.getPassword()==null) {
+				throw new AddException();
+			}
 			if(service.update(user)) {
 				map.put("status",1);
 			}
-		} catch (SQLException | ModifyException | NotExistException e) {
+		} catch (SQLException | ModifyException | NotExistException | AddException e) {
 			e.printStackTrace();
 			map.put("status",0);
 		}

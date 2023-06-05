@@ -24,8 +24,11 @@ public class UserService {
 	}
 	
 	public boolean signUp(UserDTO user, String salt) throws SQLException, AddException {
-		PeopleDAO.update(user.getName(), 1);
-		return UserDAO.signUp(user,salt);
+		boolean u = UserDAO.signUp(user,salt);
+		if(u) {
+			PeopleDAO.update(user.getName(), 1);			
+		}
+		return u;
 	}
 	
 	public UserDTO login(String id, String pwd) throws SQLException, NotExistException {

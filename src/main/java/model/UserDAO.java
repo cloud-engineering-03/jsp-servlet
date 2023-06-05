@@ -94,7 +94,7 @@ public class UserDAO {
 				String salt = rs.getString(1);
 				return salt;
 			} else {
-				throw new NotExistException("로그인 실패!.");
+				throw new NotExistException("소금 검색 실패!.");
 			}
 		} finally {
 			DBUtil.close(con, pstmt, rs);
@@ -178,8 +178,8 @@ public class UserDAO {
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				user = UserDTO.builder().name(rs.getString(1))
-										.id(rs.getString(2))
+				user = UserDTO.builder().name(rs.getString(2))
+										.id(rs.getString(1))
 										.nickName(rs.getString(3))
 										.build();
 //				user.setPostList(PostDAO.readByName(user.getName()));
