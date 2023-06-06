@@ -23,7 +23,7 @@ public class PostListServlet extends HttpServlet {
 	
 	private PostService service = new PostService();
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,Object> map = new HashMap();
 		ObjectMapper mapper = new ObjectMapper();
 		request.setCharacterEncoding("UTF-8");

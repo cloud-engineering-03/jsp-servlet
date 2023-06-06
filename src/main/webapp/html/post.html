@@ -8,7 +8,7 @@
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/cover/">
     <link href="../css/index.css">
-    <script src="../js/mypage.js"></script>
+    <script src="../js/post.js"></script>
     
 
     
@@ -31,7 +31,7 @@
   <body class="d-flex h-100 text-center text-bg-dark">
     
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
+  <header class="mb-auto" style="margin-bottom: 20%!important;">
     <div>
       <h3 class="float-md-start mb-0">대나무 숲</h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -43,31 +43,31 @@
     </div>
   </header>
 
-  <main id='main' class="px-3">
-    <h1>Fisa Cloud Engineering</h1>
-    <!-- <p class="lead"> </p> -->
-    <br><br><br><br><br>
-    <p id="p" class="lead" style="text-align: center">
-        <input id='name' class="btn btn-lg btn-secondary fw-bold border-white bg-white" readonly><br><br>
-        <input id='id' class="btn btn-lg btn-secondary fw-bold border-white bg-white" readonly><br><br>
-        <input id='password' type="password" class="btn btn-lg btn-secondary fw-bold border-white bg-white" placeholder='Password'><br><br>
-        <input id='nickName' class="btn btn-lg btn-secondary fw-bold border-white bg-white" ><br><br>
-        <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white" style="display:none">글 목록</button>
-        <button id="modify" class="btn btn-lg btn-secondary fw-bold border-white bg-white">수정하기</button>
-    </p>
-    <table id="postTable" class="table" style="background-color:white; display:none">
-  <thead class="thead-light">
+  <main id='main' class="px-3" style="text-align: left;">
+    <h2 id="title" style="float: left;"></h2>
+    <h5 id="name" style="float: right;"></h5>
+    <p id="p" class="lead" style="text-align: left; padding-top: 10px;">
+      <textarea id='content' style="height: auto; width: 100%; text-align: left;" class="btn btn-lg btn-secondary fw-bold border-white bg-white" readonly>
+      </textarea><br><br>
+      <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white">목록</button>
+      <button id="modify" class="btn btn-lg btn-secondary fw-bold border-white bg-white" style="display: none;">수정</button>
+  </p>
+    <!-- 댓글 어떻게 나오게 할건지 생각해봐라 -->
+    <!-- <table id="postTable" class="table" style="background-color:white;">
+  <thead class="thead-light" style="background-color:pink;">
     <tr>
       <th scope="col">#</th>
-      <th scope="col" width="70%">글 제목</th>
+      <th scope="col" width="45%">글 제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">조회수</th>
       <th scope="col">날짜</th>
     </tr>
   </thead>
   <tbody id="body">
-    <tr id="tr" style="display: hidden;">
+    <tr id="tr">
     </tr>
   </tbody>
-</table>
+</table> -->
   <br><br>
   </main>
 

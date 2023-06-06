@@ -15,7 +15,7 @@ public class DBUtil {
 	// 둘 다 printStackTrace할거면 묶어도 되지 않나?
 	static {
 		try {
-			p.load(new FileInputStream("C:/01.FISAlab/team3/db.properties"));
+			p.load(new FileInputStream("C:/fisa/01.java/team03/jsp-servlet/src/main/java/model/util/db.properties"));
 			Class.forName(p.getProperty("jdbc.driver"));
 		} catch (Exception e) {
 			e.printStackTrace();
