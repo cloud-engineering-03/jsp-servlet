@@ -14,6 +14,7 @@
     
 
 <link href="../css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/post.css">
 <!-- integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" -->
     <!-- Favicons
 <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -49,34 +50,25 @@
     <p id="p" class="lead" style="text-align: left; padding-top: 10px;">
       <textarea id='content' style="height: auto; width: 100%; text-align: left;" class="btn btn-lg btn-secondary fw-bold border-white bg-white" readonly>
       </textarea><br><br>
-      <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white">목록</button>
-      <button id="modify" class="btn btn-lg btn-secondary fw-bold border-white bg-white" style="display: none;">수정</button>
-  </p>
+    </p>
+    <h2 id="title">댓글</h2><br>
     <!-- 댓글 어떻게 나오게 할건지 생각해봐라 -->
-    <!-- <table id="postTable" class="table" style="background-color:white;">
-  <thead class="thead-light" style="background-color:pink;">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col" width="45%">글 제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">조회수</th>
-      <th scope="col">날짜</th>
-    </tr>
-  </thead>
-  <tbody id="body">
-    <tr id="tr">
-    </tr>
-  </tbody>
-</table> -->
+      <div class="btn btn-lg btn-secondary fw-bold border-white bg-white">
+        <div id="name" style="height: auto; text-align: left;">
+          김혁준
+        </div>
+        <div id="content">
+          test용 댓글입니다.
+          <div class="like-container">
+            <div class="like-cnt unchecked" id="like-cnt">
+              <i class="like-btn material-icons">thumb_up</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- <button id="list" class="btn btn-lg btn-secondary fw-bold border-white bg-white">목록</button>
+    <button id="comment" class="btn btn-lg btn-secondary fw-bold border-white bg-white">댓글 작성</button>
+    <button id="modify" class="btn btn-lg btn-secondary fw-bold border-white bg-white" style="display: none;">수정</button> -->
   <br><br>
   </main>
-
-  <footer class="mt-auto text-white-50">
-    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-  </footer>
-</div>
-
-    
-  
-
 </body></html>

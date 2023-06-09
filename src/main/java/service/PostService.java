@@ -18,7 +18,6 @@ public class PostService {
 	}
 
 	public PostDTO read(int postId) throws SQLException, NotExistException {
-		PostDAO.countUp(postId);
 		return PostDAO.read(postId);
 	}
 
