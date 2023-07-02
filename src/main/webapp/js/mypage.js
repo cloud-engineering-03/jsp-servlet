@@ -113,7 +113,6 @@ window.onload= function(){
             let tr2 = document.getElementById('tr2');
             let j=1;
             commentList.forEach(e => {
-                console.log(e);
                 let copy = tr2.cloneNode();
                 let date2 = Date(e.createdTime).split(" ");
                 let insertDate2 = date2[0]+" "+date2[1]+" "+date2[2]+" "+date2[3];

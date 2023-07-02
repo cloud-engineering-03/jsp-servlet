@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.util.DBUtil;
 
@@ -74,5 +75,24 @@ public class LikeDAO {
 			DBUtil.close(con, pstmt);
 		}
 		return 0;
+	}
+	
+	public static ArrayList<Integer> getLikeNum(String name) throws SQLException{
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			ArrayList<Integer> list = new ArrayList<>();
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement("select commentId from `like` where name=?");
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+			return list;
+		} finally {
+			DBUtil.close(con, pstmt);
+		}
 	}
 }

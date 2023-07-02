@@ -36,4 +36,8 @@ public class CommentService {
 			LikeDAO.delete(userName, commentId);
 		}
 	}
+	
+	public ArrayList<Integer> getLike(String userName) throws SQLException {
+		return LikeDAO.getLikeNum(userName);
+	}
 }
